@@ -41,6 +41,7 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: <<-SHELL
     apt-get update
     apt-get install -y build-essential nginx-full npm apache2 apache2-utils
+    echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCuwNiB3SKY2+MlcmIO1xfkdOJuo85AILt7CGmFRfBrB+DEgHtcGpN37G434cFbSesGu/avbsGqDM7mFy5V7vD6zb2cbZVmdzz++++7WYRbPL3LbqpECwhRQcJANVzXuA+iKboMCoc1NlmdwEfsxjrf0mSrPANb3j0DLzUMSVBW3E4NIy7CHChDgpmXWWJqHRJij66Ss/VvXbDyzuWyq+WKIaQWxZEGcOWukOKMR8F5HHhdC8nEJHrME07V+sh2HZ7MAhyRe6G6HfMD8X1ogZK9sGzAM6YM71fjaWk5tfOE0Kuws1Qy6hMQZWrOWr+P2BltggFYcPjZ3cNa76oCYdF3 thiago@tars" >> ~/.ssh/authorized_keys 
   SHELL
 
   config.vm.provision "shell", run: "always", inline: <<-SHELL

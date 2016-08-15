@@ -1,0 +1,80 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+BRIDGE_NET="192.168.40."
+DOMAIN="loadgen.com"
+servers=[
+  {
+    :vmname => "loadgen1",
+    :hostname => "app1." + DOMAIN,
+    :ip => BRIDGE_NET + "11",
+    :ram => 1000
+  },
+  {
+    :vmname => "loadgen2",
+    :hostname => "app2." + DOMAIN,
+    :ip => BRIDGE_NET + "12",
+    :ram => 1000
+  },
+  {
+    :vmname => "loadgen3",
+    :hostname => "app3." + DOMAIN,
+    :ip => BRIDGE_NET + "13",
+    :ram => 1000
+  },
+  {
+    :vmname => "loadgen4",
+    :hostname => "app4." + DOMAIN,
+    :ip => BRIDGE_NET + "14",
+    :ram => 1000
+  },
+]
+
+# All Vagrant configuration is done below. The "2" in Vagrant.configure
+# configures the configuration version (we support older styles for
+# backwards compatibility). Please don't change it unless you know what
+# you're doing.
+Vagrant.configure("2") do |config|
+  # The most common configuration options are documented and commented below.
+  # For a complete reference, please see the online documentation at
+  # https://docs.vagrantup.com.
+
+  config.vm.box = "ubuntu/trusty64"
+  config.vm.synced_folder ".", "/vagrant", disabled: true
+
+  # iteration through servers array
+  i = 1
+  servers.each do |machine|
+
+    config.vm.define machine[:vmname] do |node|
+
+      node.vm.box = "ubuntu/trusty64"
+      node.vm.hostname = machine[:hostname]
+      node.vm.network "private_network", ip: machine[:ip]
+
+      #node.vm.provider "virtualbox" do |vb|
+      #  vb.customize ["modifyvm", :id, "--memory", machine[:ram]]
+      #  vb.name = machine[:hostname]
+      #end
+
+      i += 1
+    end
+  end
+
+
+  # Enable provisioning with a shell script. Additional provisioners such as
+  # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
+  # documentation for more information about their specific syntax and use.
+  config.vm.provision "shell", inline: <<-SHELL
+    apt-get update
+    apt-get install -y build-essential tsung
+    #useradd -m loadgenerator
+    #echo -e "pass1\npass1" | sudo passwd loadgenerator
+    echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCuwNiB3SKY2+MlcmIO1xfkdOJuo85AILt7CGmFRfBrB+DEgHtcGpN37G434cFbSesGu/avbsGqDM7mFy5V7vD6zb2cbZVmdzz++++7WYRbPL3LbqpECwhRQcJANVzXuA+iKboMCoc1NlmdwEfsxjrf0mSrPANb3j0DLzUMSVBW3E4NIy7CHChDgpmXWWJqHRJij66Ss/VvXbDyzuWyq+WKIaQWxZEGcOWukOKMR8F5HHhdC8nEJHrME07V+sh2HZ7MAhyRe6G6HfMD8X1ogZK9sGzAM6YM71fjaWk5tfOE0Kuws1Qy6hMQZWrOWr+P2BltggFYcPjZ3cNa76oCYdF3 thiago@tars" >> ~/.ssh/authorized_keys 
+    #echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCuwNiB3SKY2+MlcmIO1xfkdOJuo85AILt7CGmFRfBrB+DEgHtcGpN37G434cFbSesGu/avbsGqDM7mFy5V7vD6zb2cbZVmdzz++++7WYRbPL3LbqpECwhRQcJANVzXuA+iKboMCoc1NlmdwEfsxjrf0mSrPANb3j0DLzUMSVBW3E4NIy7CHChDgpmXWWJqHRJij66Ss/VvXbDyzuWyq+WKIaQWxZEGcOWukOKMR8F5HHhdC8nEJHrME07V+sh2HZ7MAhyRe6G6HfMD8X1ogZK9sGzAM6YM71fjaWk5tfOE0Kuws1Qy6hMQZWrOWr+P2BltggFYcPjZ3cNa76oCYdF3 thiago@tars" >> /home/vagrant/.ssh/authorized_keys 
+  SHELL
+
+  config.vm.provision "shell", run: "always", inline: <<-SHELL
+    #service apache2 stop
+  SHELL
+end
