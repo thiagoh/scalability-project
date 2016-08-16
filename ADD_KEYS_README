@@ -1,0 +1,9 @@
+ssh-copy-id -i ~/.ssh/id_rsa.pub vagrant@loadgen1
+ssh-copy-id -i ~/.ssh/id_rsa.pub vagrant@loadgen2
+ssh-copy-id -i ~/.ssh/id_rsa.pub vagrant@loadgen3
+ssh-copy-id -i ~/.ssh/id_rsa.pub vagrant@loadgen4
+
+ssh-copy-id -i ~/.ssh/id_rsa.pub thiago@loadgen1
+ssh-copy-id -i ~/.ssh/id_rsa.pub thiago@loadgen2
+ssh-copy-id -i ~/.ssh/id_rsa.pub thiago@loadgen3
+ssh-copy-id -i ~/.ssh/id_rsa.pub thiago@loadgen4

@@ -4,10 +4,11 @@
 <tsung loglevel="notice" version="1.0">
 	<!-- Client side setup -->
 	<clients>
-		 <client host="localhost" use_controller_vm="true"/>
-		<!-- <client cpu="7" host="loadgen1" maxusers="40000" weight="1">
+		 <!-- <client host="localhost" use_controller_vm="true"/> -->
+		<client cpu="7" host="loadgen1" maxusers="40000" weight="1">
 			<ip value="192.168.40.11"/>
 		</client>
+		<!-- 
 		<client cpu="7" host="loadgen2" maxusers="40000" weight="1">
 			<ip value="192.168.40.12"/>
 		</client>
